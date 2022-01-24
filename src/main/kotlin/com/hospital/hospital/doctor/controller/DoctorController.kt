@@ -20,15 +20,15 @@ class DoctorController(private val doctorService: DoctorService,private val user
      */
     @PostMapping("/createDoctor")
     fun createDoctorUser(@RequestBody body: DoctorDto):ResponseEntity<Any>{
-        return try {
+         try {
             //Check if Doctor has been exists
             var checkUser = this.userService.findByEmail(body.emailAddress)
             if(checkUser != null){
-             ResponseEntity.badRequest().body(MessageDto("The Doctor Already exists in the system!!"))
+                return ResponseEntity.badRequest().body(MessageDto("The Doctor Already exists in the system!!"))
             }
-            ResponseEntity.ok(this.doctorService.submitDto(body))
+             return ResponseEntity.ok(this.doctorService.submitDto(body))
         }catch(ex: Exception){
-            ResponseEntity.badRequest().body(MessageDto("Could not save doctor data due to some error"))
+             return ResponseEntity.badRequest().body(MessageDto("Could not save doctor data due to some error"))
         }
     }
 
@@ -38,13 +38,13 @@ class DoctorController(private val doctorService: DoctorService,private val user
      * @param id
      * @return responseEntity<Any>
      */
-    @PostMapping("/dropDoctor/{id}")
+    @DeleteMapping("/dropDoctor/{id}")
     fun dropDoctor(@PathVariable id : String):ResponseEntity<Any> {
-    return try{
+     try{
         var newId = id.toLong()
-        ResponseEntity.ok(this.doctorService.dropDoctor(newId))
+         return ResponseEntity.ok(this.doctorService.dropDoctor(newId))
     }catch(ex: Exception){
-        ResponseEntity.badRequest().body(MessageDto("Could not drop the doctor!!"))
+         return ResponseEntity.badRequest().body(MessageDto("Could not drop the doctor!!"))
     }
     }
 
@@ -71,12 +71,10 @@ class DoctorController(private val doctorService: DoctorService,private val user
     @PostMapping("/rescheduleAppointment/{id}")
     fun rescheduleAppointment(@RequestBody body: AppointmentDto, @PathVariable id:String):ResponseEntity<Any>{
         return try {
-            ResponseEntity.ok(this.patientService.rescheduleAppointment(body, id.toLong()))
+            return ResponseEntity.ok(this.patientService.rescheduleAppointment(body, id.toLong()))
         }catch(ex: Exception){
-            ResponseEntity.badRequest().body(MessageDto("Failed to reschedule Appointment!!"))
+            return ResponseEntity.badRequest().body(MessageDto("Failed to reschedule Appointment!!"))
         }
     }
-
-
 
 }

@@ -14,7 +14,7 @@ class User {
     var username=""
     @Column(name="EMAIL", unique = true)
     var email=""
-    @Column(name="PRINCIPAL_ROLE", unique = true)
+    @Column(name="PRINCIPAL_ROLE")
     var principalRole = ""
     @Column(name = "PASSWORD")
     var password=""

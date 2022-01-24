@@ -65,15 +65,15 @@ class AuthController(private val userService: UserService) {
      */
     @GetMapping("/user")
     fun user(@CookieValue("jwt") jwt:String?):ResponseEntity<Any>{
-        return try {
+        try {
             if (jwt == null) {
-                ResponseEntity.status(401).body(MessageDto("UnAuthenticated, Kindly Login"))
+                return ResponseEntity.status(401).body(MessageDto("UnAuthenticated, Kindly Login"))
             }
 
             val body = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).body
-            ResponseEntity.ok(this.userService.getById(body.issuer.toLong()))
+            return  ResponseEntity.ok(this.userService.getById(body.issuer.toLong()))
         }catch(e:Exception){
-            ResponseEntity.status(401).body(MessageDto("UnAuthenticated, Kindly Login"))
+            return  ResponseEntity.status(401).body(MessageDto("UnAuthenticated, Kindly Login"))
         }
     }
 

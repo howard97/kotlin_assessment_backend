@@ -23,12 +23,33 @@ class PatientController(private val patientService: PatientService) {
     fun scheduleAppointment(@RequestBody body : AppointmentDto): ResponseEntity<Any> {
         try{
             var id = body.patientId.toString()
-            /*if(this.patientService.checkIfUserHasAnExistingAppointment(id.toLong())){
-                return ResponseEntity.badRequest().body(MessageDto("You currently have an existing appointment, Kindly wait for the doctors to respond"))
-            }*/
+            /*var appointment = this.patientService.checkIfUserHasAnExistingAppointment(id.toLong())*/
             return ResponseEntity.ok(this.patientService.scheduleAppointment(body))
         }catch(e:Exception){
            return ResponseEntity.badRequest().body(MessageDto("The request to schedule an appointment failed"))
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
